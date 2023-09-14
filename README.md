@@ -76,7 +76,7 @@
 **Rationale:**
 - Given the diverse set of features and third-party integrations, designing the system with modularity in mind would be beneficial. This allows different parts of the system to be developed, updated, and maintained independently.
 
-### 11.Feasibility
+### 11. Feasibility
 **Rationale:**
 - Budget Constraints: Startups often have limited funds, which means that every technology or solution they decide to adopt should be financially viable. This includes considerations around licensing costs, infrastructure costs, and any other operational expenses. Feasibility ensures that the proposed solution doesn't overshoot the budget.
 - Manpower and Skillset: A startup may have a small engineering team, possibly with a limited set of skills. Thus, the technology stack and solutions chosen should be within the competency of the available team, or at least easy for them to pick up. Choosing a very niche or complex tech stack may not be feasible for a small team.
@@ -85,4 +85,5 @@
 ## Architecture Decision Records
 - [ADR01: Emerging Architecture](adr%2FADR01-EmergingArchitecture.md)
 - [ADR02: Use of Adapters for External Integrations](adr%2FADR02-UseAdaptersForExternalIntegrations.md)
+- [ADR03: Adoption of Event Sourcing for Reservation Data Management](adr%2FADR03-EventSourcingForReservationDataManagement.md)
 - [ADR07: Introduction of Write Models and Projections](adr%2FADR07-WriteModelsProjections.md)
