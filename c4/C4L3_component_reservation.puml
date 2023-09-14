@@ -19,6 +19,8 @@ System_Boundary(roadwarrior, "RoadWarrior") {
         Component(shared, "Shared content", "Projection of reservations that were marked for sharing")
 
         Component(notification, "Notification", "Reacts to events from reservation and publishes notification")
+
+        Component(reporter, "Report generator", "Periodically check for candidates for yearly report")
     }
 
     Container(warehouse, "Analytical Warehouse", "Processes analytical data")
@@ -46,5 +48,8 @@ Rel(adapter, agency, "Reads for updates")
 
 Rel(viewer, acl_viewer, "Views shared content")
 Rel(acl_viewer, shared, "Views shared content")
+
+Rel_U(reporter, projection, "Check for reservations for yearly report and generates report projection")
+Rel(reporter, notification, "Triggers notification with yearly report")
 
 @enduml
