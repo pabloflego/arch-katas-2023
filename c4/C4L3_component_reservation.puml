@@ -1,0 +1,53 @@
+@startuml
+!include <c4/C4_Component.puml>
+!include <office/Users/mobile_user.puml>
+
+SHOW_PERSON_SPRITE("mobile_user")
+
+Person(customer, "Customer")
+Person(viewer, "Anonymous")
+
+System_Boundary(roadwarrior, "RoadWarrior") {
+
+    Container_Boundary(reservation_b, "Reservation") {
+        Component(acl_customer, "Authorisation & Access Layer", "Controls access to customer owned content")
+        Component(acl_viewer, "Anonymous Access Layer", "Allows for access to shared content")
+
+        Component(reservation, "Reservation", "Event Sourced write model managing reservations")
+
+        Component(trip, "Trip", "Write model for managing trips")
+        Component(projection, "Projection", "Projection for reservations with and without trips")
+        Component(shared, "Shared content", "Projection of reservations that were marked for sharing")
+
+        Component(notification, "Notification", "Reacts to events from reservation and publishes notification")
+    }
+
+    Container(warehouse, "Analytical Warehouse", "Processes analytical data")
+    Container(adapter, "Travel Agency Adapter", "Provides reservation related information")
+}
+
+Component_Ext(notification_gateway, "Notification Gateway", "Broadcasts notification via channels: E-Mail, SMS, Push")
+Component_Ext(agency, "Travel Agency", "Source of reservation information")
+
+
+Rel(customer, acl_customer, "Manages reservations and trips")
+Rel(acl_customer, reservation, "Manages reservations")
+Rel(reservation, projection, "Creates & updates projection")
+Rel(reservation, notification, "Triggers notification")
+Rel(notification, notification_gateway, "Publishes notification")
+
+Rel(acl_customer, trip, "Manages reservations")
+Rel(trip, projection, "Creates & updates projection")
+
+Rel(trip, warehouse, "Sends events for analytical purposes")
+Rel(reservation, warehouse, "Sends events for analytical purposes")
+
+Rel(projection, shared, "Projects for sharing")
+
+Rel(adapter, reservation, "Updates reservation")
+Rel(adapter, agency, "Reads for updates")
+
+Rel(viewer, acl_viewer, "Views shared content")
+Rel(acl_viewer, shared, "Views shared content")
+
+@enduml
