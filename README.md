@@ -18,6 +18,7 @@
     * [9. Usability](#9-usability)
     * [10. Modularity](#10-modularity)
     * [11.Feasibility](#11feasibility)
+  * [Architecture Decision Records](#architecture-decision-records)
 <!-- TOC -->
 
 ## Introduction
@@ -81,3 +82,6 @@
 - Manpower and Skillset: A startup may have a small engineering team, possibly with a limited set of skills. Thus, the technology stack and solutions chosen should be within the competency of the available team, or at least easy for them to pick up. Choosing a very niche or complex tech stack may not be feasible for a small team.
 - Time-to-Market: One of the biggest advantages startups can have is the speed at which they release their products to capture the market. A feasible architecture would consider the speed of development and deployment, ensuring that the startup can launch in a timely manner.
 
+## Architecture Decision Records
+- [ADR01: Emerging Architecture](adr%2FADR01-EmergingArchitecture.md)
+- [ADR07: Introduction of Write Models and Projections](adr%2FADR07-WriteModelsProjections.md)
