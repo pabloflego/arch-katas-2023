@@ -1,0 +1,40 @@
+@startuml
+!include <c4/C4_Component.puml>
+
+System_Boundary(roadwarrior, "RoadWarrior") {
+
+    Container_Boundary(adapter_api, "API Travel Agency Adapter") {
+        Component(api_cli, "API Client", "")
+        Component(api_processor, "Processor", "Converts fetched update to update event")
+    }
+
+    Container_Boundary(adapter_mail, "E-mail Scanning Adapter") {
+        Component(mail_cli, "API Client", "")
+        Component(mail_processor, "Processor", "Converts fetched update to update event")
+    }
+
+    Container_Boundary(adapter_gateway, "E-mail Gateway Adapter") {
+        Component(gateway_cli, "API Client", "")
+        Component(gateway_processor, "Processor", "Converts fetched update to update event")
+    }
+
+    Component(reservation, "Reservation", "Event Sourced write model managing reservations")
+}
+
+Component_Ext(api, "Travel Agency", "Source of reservation information")
+Component_Ext(mail, "Account", "E-mail account")
+Person(sender, "Customer", "E-mail sender")
+
+Rel_U(api_cli, api, "Fetches updates")
+Rel(api_cli, api_processor, "Passes updates for processing")
+Rel(api_processor, reservation, "Updates Reservation")
+
+Rel_U(mail_cli, mail, "Fetches updates")
+Rel(mail_cli, mail_processor, "Passes updates for processing")
+Rel(mail_processor, reservation, "Updates Reservation")
+
+Rel_U(gateway_cli, sender, "Receives updates")
+Rel(gateway_cli, gateway_processor, "Passes updates for processing")
+Rel(gateway_processor, reservation, "Updates Reservation")
+
+@enduml
