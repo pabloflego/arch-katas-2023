@@ -1,4 +1,4 @@
-# ADR07: Adoption of Separate Write Models and Projections
+# ADR05: Adoption of Separate Write Models and Projections
 
 ## Status
 Proposed
