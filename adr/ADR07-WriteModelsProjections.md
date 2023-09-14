@@ -1,33 +1,30 @@
-# ADRXX: Introduction of Write Models and Projections 
+# ADR07: Adoption of Separate Write Models and Projections
 
 ## Status
-
-proposed
+Proposed
 
 ## Rationale
+In the development phase of the RoadWarrior's Reservation Container, performance emerged as a paramount concern. With the expected large user base and strict latency requirements on both web and mobile platforms, there is a need to ensure optimal system responsiveness. Performing complex calculations during read operations could hinder the desired performance, especially given the requirement for real-time updates.
 
-During the system design phase for the RoadWarrior's Reservation Container, performance surfaced as a critical concern. The application is expected to serve a large user base, with strict response times specified for both web and mobile platforms. Furthermore, the application's need to consistently provide real-time updates and respond to user actions necessitates a system that avoids on-the-fly complex calculations, especially during read operations.
-
-Traditional architectures that combine both read and write operations into a single model can often encounter performance bottlenecks. These bottlenecks are particularly evident in systems where the read patterns are vastly different from the write patterns or where the read frequency far exceeds the write frequency.
+Traditionally, architectures that integrate both read and write operations within a single model can face performance limitations, especially when read patterns diverge significantly from write patterns or when reads considerably outnumber writes.
 
 ## Decision
+To tackle the performance challenges, we've decided to:
 
-To address the performance concerns, the system will adopt a CQRS (Command Query Responsibility Segregation) architectural pattern. This involves separating the write operations (commands) from the read operations (queries).
+- **Write Models**: These will solely manage data write operations. After each write action, a corresponding projection (or read-optimized model) will be updated or generated to reflect the current data state.
 
-- Write Models: These will handle all data write operations. After every write operation, a projection will be generated or updated, representing the current state of the data.
+- **Projections**: Optimized specifically for read operations, these models are derived and updated from the write models. By relying on these projections, we can serve data to users without executing costly calculations on-the-fly. Instead, the system retrieves pre-formatted and optimized data tailored for viewing.
 
-- Projections (Read Models): These are optimized for read operations. They are created and updated by the write models. Instead of running costly calculations every time a user wants to view data, the system will query these projections, which are already in a format optimized for reading and displaying to the user.
-
-This separation ensures that the system can be optimized for both write-heavy operations and read-heavy operations without one affecting the performance of the other.
+This separation aims to cater to the distinct needs of both write-centric and read-centric operations, ensuring that neither operation impacts the other's performance.
 
 ## Consequences
+- **Enhanced Scalability**: By differentiating read and write operations, each part of the system can be scaled based on its load independently. For instance, in a read-intensive scenario, the projections can be scaled without influencing the write models.
 
-- Easier Scalability: By segregating read and write operations, we can independently scale the parts of the system that are under the most load.
+- **Improved Performance**: Due to the utilization of projections, read operations become more efficient as they bypass real-time extensive calculations.
 
-- Performance: Read operations will be faster since the system will fetch pre-computed results from the projections instead of performing calculations during the read process.
+- **Increased Complexity**: This approach might elevate the system's intricacy. Such complexity could potentially affect maintainability and might necessitate comprehensive documentation and additional training for newcomers.
 
-- Complexity: Introducing CQRS can increase the overall complexity of the system. This could impact the maintainability and could require more documentation and training for new team members.
+- **Eventual Consistency**: As projections get updated post write operations, there might be a negligible delay in mirroring the latest data, leading to brief periods of inconsistency.
 
-- Consistency: Since projections are updated after write operations, there might be a slight delay in reflecting the most recent data. This can introduce eventual consistency concerns where the data might not be immediately consistent across the system but will become consistent after a short period.
+- **Greater Flexibility**: This model ensures adaptability to evolving read and write patterns. If new read trends emerge, they can be addressed by introducing a new projection without altering the current write model.
 
-- Flexibility: The system can easily adapt to changing read and write patterns. If a new read pattern emerges that wasn't initially considered, a new projection can be introduced without affecting the existing write model.
