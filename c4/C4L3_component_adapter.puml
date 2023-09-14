@@ -9,12 +9,12 @@ System_Boundary(roadwarrior, "RoadWarrior") {
     }
 
     Container_Boundary(adapter_mail, "E-mail Scanning Adapter") {
-        Component(mail_cli, "API Client", "")
+        Component(mail_cli, "Inbox Client", "")
         Component(mail_processor, "Processor", "Converts fetched update to update event")
     }
 
     Container_Boundary(adapter_gateway, "E-mail Gateway Adapter") {
-        Component(gateway_cli, "API Client", "")
+        Component(gateway_cli, "Gateway Client", "")
         Component(gateway_processor, "Processor", "Converts fetched update to update event")
     }
 
