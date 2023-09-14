@@ -9,13 +9,12 @@ Person(viewer, "Anonymous")
 
 System_Boundary(roadwarrior, "RoadWarrior") {
 
+    Component(acl_customer, "Authorisation & Access Layer", "Controls access to customer owned content")
+    Component(acl_viewer, "Anonymous Access Layer", "Allows for access to shared content")
+
     Container_Boundary(reservation_b, "Reservation") {
-        Component(acl_customer, "Authorisation & Access Layer", "Controls access to customer owned content")
-        Component(acl_viewer, "Anonymous Access Layer", "Allows for access to shared content")
 
-        Component(reservation, "Reservation", "Event Sourced write model managing reservations")
-
-        Component(trip, "Trip", "Write model for managing trips")
+        Component(reservation, "Reservation & Trips", "Event Sourced write model managing reservations and trips")
         Component(projection, "Projection", "Projection for reservations with and without trips")
         Component(shared, "Shared content", "Projection of reservations that were marked for sharing")
 
@@ -32,17 +31,15 @@ Component_Ext(agency, "Travel Agency", "Source of reservation information")
 
 Rel(customer, acl_customer, "Manages reservations and trips")
 Rel(acl_customer, reservation, "Manages reservations")
+Rel(acl_customer, projection, "Accesses reservations")
 Rel(reservation, projection, "Creates & updates projection")
+
 Rel(reservation, notification, "Triggers notification")
 Rel(notification, notification_gateway, "Publishes notification")
 
-Rel(acl_customer, trip, "Manages reservations")
-Rel(trip, projection, "Creates & updates projection")
-
-Rel(trip, warehouse, "Sends events for analytical purposes")
 Rel(reservation, warehouse, "Sends events for analytical purposes")
 
-Rel(projection, shared, "Projects for sharing")
+Rel_L(projection, shared, "Projects for sharing")
 
 Rel(adapter, reservation, "Updates reservation")
 Rel(adapter, agency, "Reads for updates")
