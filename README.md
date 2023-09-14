@@ -84,4 +84,5 @@
 
 ## Architecture Decision Records
 - [ADR01: Emerging Architecture](adr%2FADR01-EmergingArchitecture.md)
+- [ADR02: Use of Adapters for External Integrations](adr%2FADR02-UseAdaptersForExternalIntegrations.md)
 - [ADR07: Introduction of Write Models and Projections](adr%2FADR07-WriteModelsProjections.md)
