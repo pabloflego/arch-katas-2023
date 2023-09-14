@@ -1,0 +1,18 @@
+@startuml
+!include <c4/C4_Component.puml>
+
+System_Boundary(roadwarrior, "RoadWarrior") {
+
+    Container_Boundary(warehouse, "Analytical Warehouse") {
+        Component(processor, "Processor", "Coverts domain events into analytical data: anonymizes, abstracts etc.")
+    }
+
+    ContainerDb(storage, "Analytical storage", "Columnar storage")
+
+    Component(reservation, "Reservation", "Event Sourced write model managing reservations")
+}
+
+Rel(reservation, processor, "Receives reservation update")
+Rel(processor, storage, "Stores processed event")
+
+@enduml
