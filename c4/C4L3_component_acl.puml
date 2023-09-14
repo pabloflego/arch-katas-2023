@@ -1,0 +1,25 @@
+@startuml
+!include <c4/C4_Component.puml>
+!include <office/Users/mobile_user.puml>
+
+SHOW_PERSON_SPRITE("mobile_user")
+
+Person(customer, "Customer")
+
+System_Boundary(roadwarrior, "RoadWarrior") {
+
+    Container_Boundary(acl_customer, "Authorisation & Access Layer", "Controls access to customer owned content") {
+        Component(identity, "Identity manager", "Authenticates customers")
+        Component(access, "Access manager", "Authorizes customers")
+    }
+
+    Component(reservation, "Reservation", "Event Sourced write model managing reservations")
+    Component(projection, "Projection", "Projection for reservations with and without trips")
+}
+
+Rel(customer, identity, "Accesses application")
+Rel(identity, access, " ")
+Rel(access, reservation, "Manages own reservations")
+Rel(access, projection, "Accesses own data")
+
+@enduml
