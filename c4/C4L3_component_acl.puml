@@ -13,13 +13,14 @@ System_Boundary(roadwarrior, "RoadWarrior") {
         Component(access, "Access manager", "Authorizes customers")
     }
 
-    Component(reservation, "Reservation", "Event Sourced write model managing reservations")
+    Component(reservation, "Reservation & Trips", "Event Sourced write model managing reservations and trips")
     Component(projection, "Projection", "Projection for reservations with and without trips")
 }
 
-Rel(customer, identity, "Accesses application")
-Rel(identity, access, " ")
-Rel(access, reservation, "Manages own reservations")
-Rel(access, projection, "Accesses own data")
+Rel_D(customer, identity, "Authorizes identity")
+Rel_D(customer, access, "Accesses with acquired identity")
+Rel_L(access, identity, "Verifies identity")
+Rel_D(access, reservation, "Manages own reservations")
+Rel_D(access, projection, "Accesses own data")
 
 @enduml
