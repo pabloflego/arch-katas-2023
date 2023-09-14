@@ -1,0 +1,40 @@
+@startuml
+!include <c4/C4_Container.puml>
+!include <office/Users/mobile_user.puml>
+
+SHOW_PERSON_SPRITE("mobile_user")
+
+Person(user, "Customer")
+
+Boundary(roadwarrior, "RoadWarrior") {
+
+    Boundary(b_reservation, "Reservation") {
+        Container(reservation, "Reservation", "Allows for managing and viewing reservations, group them into trips etc.")
+        ContainerDb(reservationDB, "Database", "Stores reservations and trip groups")
+    }
+
+    Boundary(b_warehouse, "Analytical") {
+        Container(warehouse, "Analytical Warehouse", "Processes analytical data")
+        ContainerDb(warehouseDB, "Database", "Stores analytical data")
+    }
+
+    Container(agencyAdapter, "Agency Adapter", "Tracks changes of reservation in Travel Agency system and updates reservation")
+}
+
+Container_Ext(agency, "Travel Agency", "")
+Container_Ext(notification, "Notification Gateway", "Broadcasts notification via channels: E-Mail, SMS, Push")
+
+Rel(user, reservation, "Manages reservation and trips")
+Rel(user, warehouse, "Collects analytical data")
+Rel(reservation, reservationDB, "Reads from and stores to", "SQL/TCP")
+
+Rel(reservation, notification, "Triggers notifications", "HTTP")
+
+Rel(reservation, warehouse, "Propagates analytical data", "HTTP/REST")
+Rel(warehouse, warehouseDB, "Writes analytical data", "??")
+
+Rel(agencyAdapter, reservation, "Updates reservation", "HTTP/REST")
+Rel(agencyAdapter, agency, "Updates reservation", "HTTP/REST/E-Mail/Etc.")
+
+
+@enduml

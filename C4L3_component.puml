@@ -1,0 +1,56 @@
+@startuml
+!include <c4/C4_Component.puml>
+!include <office/Users/mobile_user.puml>
+
+SHOW_PERSON_SPRITE("mobile_user")
+
+Person(customer, "Customer")
+Person(viewer, "Anonymous")
+
+System_Boundary(roadwarrior, "RoadWarrior") {
+
+    Container_Boundary(reservation_b, "Reservation") {
+        Component(acl_customer, "Authorisation & Access Layer", "<TODO>")
+        Component(acl_viewer, "Anonymous Access Layer", "<TODO>")
+
+        Component(reservation_write, "Reservation [Write Model]", "<TODO>")
+        Component(reservation_read, "Reservation Projection", "<TODO>")
+
+        Component(trip_write, "Trip [Write Model]", "<TODO>")
+        Component(trip_read, "Trip Projection", "<TODO>")
+        Component(trip_sharing, "Shared Trip Projection", "<TODO>")
+
+        Component(notification, "Notification", "<TODO>")
+
+        Component(agencyAdapterConfiguration, "Travel Agency Adapter Configuration", "<TODO>")
+    }
+
+    Container(warehouse, "Analytical Warehouse", "Processes analytical data")
+    Container(agencyAdapter, "Travel Agency Adapter", "Processes analytical data")
+}
+
+Component_Ext(notification_gateway, "Notification Gateway", "Broadcasts notification via channels: E-Mail, SMS, Push")
+
+Rel_D(viewer, acl_viewer, "Views shared trips")
+Rel_D(acl_viewer, trip_sharing, "Views shared trips")
+Rel_U(trip_read, trip_sharing, "Projects trip for sharing")
+Rel_R(trip_read, reservation_read, "Groups reservations")
+
+Rel_D(customer, acl_customer, "Manages reservations and trips")
+Rel_D(acl_customer, reservation_write, "Manages reservations")
+Rel_L(reservation_write, reservation_read, "Creates & updates projection")
+
+Rel(reservation_write, warehouse, "Sends analytical data")
+Rel_R(trip_write, warehouse, "Sends analytical data")
+
+Rel(reservation_write, notification, "Triggers notification")
+Rel(notification, notification_gateway, "Emits notification")
+
+Rel_D(acl_customer, trip_write, "Manages trips")
+Rel_D(trip_write, trip_read, "Creates & updates projection")
+
+Rel(agencyAdapter, reservation_write, "Updates reservation")
+Rel(agencyAdapterConfiguration, agencyAdapter, "Provides configuration for travel agency access")
+
+Rel_R(acl_customer, agencyAdapterConfiguration, "Configures agency adapter")
+@enduml
