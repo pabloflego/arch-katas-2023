@@ -53,7 +53,7 @@ Proposed
 
 Important thing for startup is being as efficient with the money as possible. In terms of front-end
 that is: sharing and reusing as much of the UI as possible across supported platforms Android, iOS, Web.
-Cross-platform and hybrid frameworks are the best tools for the job, offering high UI code reuse.
+Cross-platform and hybrid frameworks are the best tools for the job, offering high code reuse.
 
 ## Decision
 
