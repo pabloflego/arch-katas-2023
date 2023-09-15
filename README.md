@@ -1,12 +1,13 @@
 # O'Reilly Architectural Katas 2023
-```
-Team: BingBongDingDong
-Members:
-    - Luiz Tanure
-    - Marko Novaković
-    - Michał Wachowski
-    - Pablo Flego
-```
+
+> Team: BingBongDingDong
+> 
+> Members:
+>    - Luiz Tanure
+>    - Marko Novaković
+>    - Michał Wachowski
+>    - Pablo Flego
+
 ## Contents
 
 <!-- TOC -->
@@ -19,10 +20,13 @@ Members:
   <!-- TOC -->
 
 ## Introduction _(TODO: Proof Read)_
+
 **RoadWarrior** is an ambitious endeavor to provide travelers with a next-generation online trip management dashboard. Its goal is to deliver a unified platform where travelers can view and manage their reservations, spanning across multiple services like flights, hotels, and car rentals. The system's essence lies in its real-time updates, seamless integrations with prominent travel systems, and a rich user interface to offer the best experience across both web and mobile platforms. Furthermore, with the power of analytics, RoadWarrior aims to understand travel trends and preferences, providing valuable insights for travelers and stakeholders alike.
 
 ## Business Case  _(TODO: Proof Read)_
+
 ### **Objective**:
+
 To develop a state-of-the-art trip management dashboard that not only offers utility to travelers but also leads in terms of performance, availability, and integration capabilities.
 
 ### **Key Reasons**:
@@ -44,7 +48,6 @@ To develop a state-of-the-art trip management dashboard that not only offers uti
 ### **Conclusion**:
 
 The RoadWarrior system, with its emphasis on user experience, performance, and data analytics, is positioned not just as a utility tool but as a game-changer in the travel industry. With the right execution, it holds the promise of reshaping how travelers manage and plan their trips.
-
 
 
 ## Architectural Characteristics
