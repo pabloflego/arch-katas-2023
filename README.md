@@ -1,9 +1,15 @@
 # O'Reilly Architectural Katas 2023
-
+```
+Team: BingBongDingDong
+Members:
+    - Luiz Tanure
+    - Marko Novaković
+    - Michał Wachowski
+    - Pablo Flego
+```
 ## Contents
 
 <!-- TOC -->
-
 - [O'Reilly Architectural Katas 2023](#oreilly-architectural-katas-2023)
   - [Contents](#contents)
   - [Introduction](#introduction)
