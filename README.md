@@ -94,22 +94,28 @@ The RoadWarrior system, with its emphasis on user experience, performance, and d
    - The application aims to provide the richest user interface possible across all platforms. This puts emphasis on the usability aspect, ensuring that users can easily navigate and use the system without friction.
    - Usability also relates to how easily users can manually update reservations, group items by trips, and share their trips.
 
-```mermaid
 
-flowchart
-    subgraph Adapters
-        direction TB
-        EMAIL
-        SABRE
-        APOLLO
-    end
-    
-    ES[Event Sourcing]
-    AW[Analytical Warehouse]
+## Narrative
 
-    Adapters-->ES
-    ES-->AW
-```
+### Identifying the underlying architectural needs via Event Storming
+
+![eventstorming.jpeg](eventstorming%2Feventstorming.jpeg)
+
+### Modeling the architecture
+
+![C4L2_container.png](c4%2FC4L2_container.png)
+![C4L3_component_acl.png](c4%2FC4L3_component_acl.png)
+![C4L3_component_adapter.png](c4%2FC4L3_component_adapter.png)
+![C4L3_component_reservation.png](c4%2FC4L3_component_reservation.png)
+![C4L3_component_warehouse.png](c4%2FC4L3_component_warehouse.png)
+
+### Rich client thingie
+
+
+
+### Evaluation, Risk assessment
+
+
 
 ## Architecture Decision Records
 
