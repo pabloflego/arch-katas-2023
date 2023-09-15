@@ -91,6 +91,23 @@ The RoadWarrior system, with its emphasis on user experience, performance, and d
    - The application aims to provide the richest user interface possible across all platforms. This puts emphasis on the usability aspect, ensuring that users can easily navigate and use the system without friction.
    - Usability also relates to how easily users can manually update reservations, group items by trips, and share their trips.
 
+```mermaid
+
+flowchart
+    subgraph Adapters
+        direction TB
+        EMAIL
+        SABRE
+        APOLLO
+    end
+    
+    ES[Event Sourcing]
+    AW[Analytical Warehouse]
+
+    Adapters-->ES
+    ES-->AW
+```
+
 ## Architecture Decision Records
 
 - [ADR01: Emerging Architecture](adr%2FADR01-EmergingArchitecture.md)
