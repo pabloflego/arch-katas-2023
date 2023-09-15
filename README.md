@@ -117,7 +117,7 @@ We identified domains:
 
 - **Notifications** - a relatively simple component acting as integration gateway with chosen third party provider, its implementation and size heavily depends on which will be chosen.
 
-### Modeling the architecture [ADR01][ADR01]
+### Modeling the architecture [ADR01]
 
 We invision an architecture that will provide strong basis for the product to begin with, and be able to evolve in any direction with the changes to the product. No concrete architectural style is enforces, instead a mix between them is picked.
 
@@ -144,7 +144,7 @@ There is second ACL, that is intended only for controlling and tracking access t
 
 The idea is to have clear and strong separation between data that is dedicated to the customers and freely accessible by people that were shared with.
 
-##### Adapters [ADR02][ADR02]
+##### Adapters [ADR02]
 
 ![C4L3_component_adapter.png](c4%2FC4L3_component_adapter.png)
 
@@ -157,7 +157,7 @@ The *E-Mail Scanning Adapter* is scanning configure e-mail account for messages 
 
 The *Api Travel Agency Adapter* is designed for polling information from Travel Agencies APIs.
 
-##### Reservations [ADR03][ADR03] [ADR05][ADR05]
+##### Reservations [ADR03] [ADR05]
 ![C4L3_component_reservation.png](c4%2FC4L3_component_reservation.png)
 
 This is the core system. It starts as a modular monolith as this will provide ease of evolution and extensibility needed on the early stages needed in startups. At the same time it will allow for future extraction of subdomains if they become large enough to be independent services.
@@ -177,13 +177,13 @@ If customer decides to share trip with the world, a copy of it is made into shar
 
 On every update of the reservation a notification trigger is sent to the Notification component, that will converse it into a notification message fitting specific communication channel.
 
-##### Analytical warehouse [ADR04][ADR04] [ADR06][ADR06]
+##### Analytical warehouse [ADR04] [ADR06]
 ![C4L3_component_warehouse.png](c4%2FC4L3_component_warehouse.png)
 
 It is purely passive system that receives data from the core domain - reservations, or from the client applications. Processes them before storing them in the columnar storage.
 The processing is limited to ensuring anonymity of the users (PII compliance), while still keeping them relevant for analytical usage.
 
-### Rich client thingie [ADR07] [ADR07]
+### Rich client thingie [ADR07]
 
 <TODO>
 
