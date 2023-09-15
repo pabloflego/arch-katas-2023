@@ -68,4 +68,4 @@
 - [ADR04: Establishment of Analytical Warehouse Subsystem for Trip Data Analytics](adr%2FADR04-AnalyticalWarehouseSubsystem.md)
 - [ADR05: Introduction of Write Models and Projections](adr%2FADR05-WriteModelsProjections.md)
 - [ADR06: Analytical Warehouse Storage](adr%2FADR06-AnalyticalWarehouseStorage.md)
-- [ADR07: Apps framework](adr%2FADR07-Apps-framework.md)
+- [ADR07: React Native as framework for apps](adr%2FADR07-React-Native-as-framework-for-apps.md)

@@ -1,4 +1,4 @@
-# AD07: Apps framework
+# ADR07: React Native as framework for apps
 
 ## Status
 
