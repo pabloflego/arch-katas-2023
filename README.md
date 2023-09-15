@@ -99,7 +99,23 @@ The RoadWarrior system, with its emphasis on user experience, performance, and d
 
 ### Identifying the underlying architectural needs via Event Storming
 
+We decided to discover the problem space, interactions, dependencies and flows in a Event Storming session.
+The assumption is that defining the users can perform while interacting with the system, 
+and the work the system needs to execute to achieve expected results will allow us to identify subdomains and 
+interactions between them. This will allow us to define scopes & boundaries to decide which areas will drive 
+architectural decisions.
+
 ![eventstorming.jpeg](eventstorming%2Feventstorming.jpeg)
+
+We identified domains:
+
+- **Reservation** - which is responsible for managing reservations and grouping them into trips. Reservations will be constantly updated from Adapters, therefore an Event Sourced representation will be beneficial as it is more natural to the actual usage.
+
+- **Adapters** - intended for integration with travel agencies and abstract the specifics of each and report updates to the Reservation domain as normalized update events.
+
+- **Analytical Warehouse** - a separate component that will be collecting data from Reservations, and updates, shared content for analytical purposes so it is separated and can evolve independently from the rest of architecture as it is driven by a separate set of requirements.
+
+- **Notifications** - a relatively simple component acting as integration gateway with chosen third party provider, its implementation and size heavily depends on which will be chosen.
 
 ### Modeling the architecture
 
