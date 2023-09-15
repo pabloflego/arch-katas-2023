@@ -117,28 +117,103 @@ We identified domains:
 
 - **Notifications** - a relatively simple component acting as integration gateway with chosen third party provider, its implementation and size heavily depends on which will be chosen.
 
-### Modeling the architecture
+### Modeling the architecture [ADR01][ADR01]
+
+We invision an architecture that will provide strong basis for the product to begin with, and be able to evolve in any direction with the changes to the product. No concrete architectural style is enforces, instead a mix between them is picked.
+
+Part of the systems, containing the core functionality is defined as a modular monolith, to ease the discovery and modeling process.
+While the supporting functionality, external integration points are as microservices to enforce separation from domain and allow for easier independent scaling, error handling without affecting the main platform. 
+
+We started with modeling the architecture by skipping the first level of the C4 models - context and focus on the containers and components.
+
+#### Containers
 
 ![C4L2_container.png](c4%2FC4L2_container.png)
+
+The key container is the Reservation, that owns the domain of managing reservations and trips, which is the core domain. It is also one of the two user facing containers - thus, it also needs to contain the web server.
+The actual tooling for web server can be picked independently of the rest of the architecture as in our opinion the greatest driver is the familiarity of the platform.
+The other one user facing is the Analytical Warehouse, which is receiving tracking and other analytical data from the client applications.
+
+#### Components
+
+##### Access Control Layer
 ![C4L3_component_acl.png](c4%2FC4L3_component_acl.png)
+
+The Access Control Layer (ACL) diagram represents the component that manages access to the system for users that want to interact with it.
+There is second ACL, that is intended only for controlling and tracking access to shared content.
+
+The idea is to have clear and strong separation between data that is dedicated to the customers and freely accessible by people that were shared with.
+
+##### Adapters [ADR02][ADR02]
+
 ![C4L3_component_adapter.png](c4%2FC4L3_component_adapter.png)
+
+Diagram visualises three versions of adapters that will update reservations by tracking different sources of information.
+The main goal of the adapters is to serve as an abstraction layer between external sources that differ in quality, availability etc. and provide updates to the reservations.
+
+The *E-Mail Gateway Adapter* is intended to receive e-mails from the customers, where they can forward relevant updates without integrating directly.
+
+The *E-Mail Scanning Adapter* is scanning configure e-mail account for messages according to defined filters, and converts them into updates.
+
+The *Api Travel Agency Adapter* is designed for polling information from Travel Agencies APIs.
+
+##### Reservations [ADR03][ADR03] [ADR05][ADR05]
 ![C4L3_component_reservation.png](c4%2FC4L3_component_reservation.png)
+
+This is the core system. It starts as a modular monolith as this will provide ease of evolution and extensibility needed on the early stages needed in startups. At the same time it will allow for future extraction of subdomains if they become large enough to be independent services.
+
+The Reservation and Trips component is the one containing all the business logic around managing reservations and grouping them ino trips.
+
+The reservations aggregate is event sourced, that all updates from adapters are additive, and this will allow for presenting changes to customers and will allow for clear separation between write and read model.
+
+Trips serve as grouping container for reservations, therefore tracking changes in same way as for reservations will not bring significant value - Trips follow traditional columnar persistence.
+
+Both, reservations and trips are projected into read model (Projections), that is responsible for accessing ongoing reservations and trips, but also serves as archive.
+Archiving is based on copying latest projection as a form of snapshot of reservation and trip into a separate storage (initially a separate table, but can evolve into cold storage later) and removing the event source representation from write model.
+
+Projection are also used for annual reporting by the Report Generator that is a periodic task running in the background.
+
+If customer decides to share trip with the world, a copy of it is made into shared content storage (also a separate table, but can evolve into more specialized storage), wich is the only place accessible by anonymous users.
+
+On every update of the reservation a notification trigger is sent to the Notification component, that will converse it into a notification message fitting specific communication channel.
+
+##### Analytical warehouse [ADR04][ADR04] [ADR06][ADR06]
 ![C4L3_component_warehouse.png](c4%2FC4L3_component_warehouse.png)
 
-### Rich client thingie
+It is purely passive system that receives data from the core domain - reservations, or from the client applications. Processes them before storing them in the columnar storage.
+The processing is limited to ensuring anonymity of the users (PII compliance), while still keeping them relevant for analytical usage.
 
+### Rich client thingie [ADR07] [ADR07]
 
+<TODO>
 
 ### Evaluation, Risk assessment
 
+The presented architecture is intended as a _starting point_ for something bigger. The main drivers were simplicity, fast development and ability to go to market quickly under limited budget.
 
+This lead to compromises, where the architecture is relatively simple, easy to set up and understand by small engineering team, while still able to deliver on expected characteristics.
+
+The design is not intended to cover all possible case that may arise, but to give strong basis for evolution and adaptation to future product directions and popularity rise.
+
+The main risk is that, if the evolution is not disciplined, it may go in the direction where all systems are interconnected, boundaries are broken and domains are blurry.
+In such case it will consume additional resources, require extra effort in development - thus slowing down.
+
+Also, the engineering team needs to keep an eye, on the moment when system needs to evolve - e.g. the core domain of reservations and trips is split into separate more dedicated services - or they will end up in situation where system is barely able to handle the expected traffic.
 
 ## Architecture Decision Records
 
-- [ADR01: Emerging Architecture](adr%2FADR01-EmergingArchitecture.md)
-- [ADR02: Use of Adapters for External Integrations](adr%2FADR02-UseAdaptersForExternalIntegrations.md)
-- [ADR03: Adoption of Event Sourcing for Reservation Data Management](adr%2FADR03-EventSourcingForReservationDataManagement.md)
-- [ADR04: Establishment of Analytical Warehouse Subsystem for Trip Data Analytics](adr%2FADR04-AnalyticalWarehouseSubsystem.md)
-- [ADR05: Introduction of Write Models and Projections](adr%2FADR05-WriteModelsProjections.md)
-- [ADR06: Analytical Warehouse Storage](adr%2FADR06-AnalyticalWarehouseStorage.md)
-- [ADR07: React Native as framework for apps](adr%2FADR07-ReactNativeFrameworkForApps.md)
+- [ADR01: Emerging Architecture][ADR01]
+- [ADR02: Use of Adapters for External Integrations][ADR02]
+- [ADR03: Adoption of Event Sourcing for Reservation Data Management][ADR03]
+- [ADR04: Establishment of Analytical Warehouse Subsystem for Trip Data Analytics][ADR04]
+- [ADR05: Introduction of Write Models and Projections][ADR05]
+- [ADR06: Analytical Warehouse Storage][ADR06]
+- [ADR07: React Native as framework for apps][ADR07]
+
+[ADR01]:adr%2FADR01-EmergingArchitecture.md
+[ADR02]:adr%2FADR02-UseAdaptersForExternalIntegrations.md
+[ADR03]:adr%2FADR03-EventSourcingForReservationDataManagement.md
+[ADR04]:adr%2FADR04-AnalyticalWarehouseSubsystem.md
+[ADR05]:adr%2FADR05-WriteModelsProjections.md
+[ADR06]:adr%2FADR06-AnalyticalWarehouseStorage.md
+[ADR07]:adr%2FADR07-ReactNativeFrameworkForApps.md
