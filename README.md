@@ -19,11 +19,11 @@
   - [Architecture Decision Records](#architecture-decision-records)
   <!-- TOC -->
 
-## Introduction _(TODO: Proof Read)_
+## Introduction
 
 **RoadWarrior** is an ambitious endeavor to provide travelers with a next-generation online trip management dashboard. Its goal is to deliver a unified platform where travelers can view and manage their reservations, spanning across multiple services like flights, hotels, and car rentals. The system's essence lies in its real-time updates, seamless integrations with prominent travel systems, and a rich user interface to offer the best experience across both web and mobile platforms. Furthermore, with the power of analytics, RoadWarrior aims to understand travel trends and preferences, providing valuable insights for travelers and stakeholders alike.
 
-## Business Case  _(TODO: Proof Read)_
+## Business Case
 
 ### **Objective**:
 
