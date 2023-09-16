@@ -37,6 +37,6 @@ We've decided to introduce an "Analytical Warehouse Subsystem" for the RoadWarri
 
 - **Cost**: Running and maintaining an analytical warehouse might introduce additional costs in terms of infrastructure and management.
 
-- **Data Inconsistency**: Depending on the data transfer mechanism, there might be a slight lag between event generation and its availability in the warehouse, leading to eventual inconsistency.
+- **Data Consistency**: Depending on the data transfer mechanism, there might be a slight lag between event generation and its availability in the warehouse, leading to eventual inconsistency.
 
 - **Flexibility**: With a dedicated warehouse, the system is poised to adopt more sophisticated analytical and machine learning tools in the future.
