@@ -34,6 +34,6 @@ We've decided to implement "Event Sourcing" for managing reservation data. With 
 
 - **Data Volume**: Storing every event can lead to large volumes of data over time. Adequate storage solutions and potential event pruning or archiving strategies might be required.
 
-- **Consistency**: The system might exhibit eventual consistency, especially when projections lag behind the latest events. However, this is a trade-off for the benefits gained.
+- **Consistency**: The system might exhibit eventual inconsistency, especially when projections lag behind the latest events. However, this is a trade-off for the benefits gained.
 
 - **Recovery and Redundancy**: In cases of system failures, data can be rebuilt from events, offering a robust mechanism for data recovery.
