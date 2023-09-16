@@ -9,8 +9,8 @@ The RoadWarrior system, requires a scalable, and efficient database solution for
 This decision is based on:
 
 1. **Scalability**: To manage high volumes of analytical data and handle spikes in workloads.
-1. **Complex Query Support**: To provide insights, aggregations, and multi-dimensional analyses.
-1. **Cost**: Balancing the budget constraints with the feature set required.
+2. **Complex Query Support**: To provide insights, aggregations, and multi-dimensional analyses.
+3. **Cost**: Balancing the budget constraints with the feature set required.
 
 ## Decision
 
