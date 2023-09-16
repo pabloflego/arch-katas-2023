@@ -186,9 +186,9 @@ On every update of the reservation, a notification trigger is sent to the Notifi
 It is a purely passive system that receives data from the core domain - reservations, or from the client applications. Processes them before storing them in the columnar storage.
 The processing is limited to ensuring anonymity of the users (PII compliance), while still keeping them relevant for analytical usage.
 
-### Rich client thingie [ADR07]
+### Rich client [ADR07]
 
-<TODO>
+By choosing a framework cross-platform, we expect to save time and resources to focus on creating better interactions and features, consistent across devices.
 
 ### Evaluation, Risk assessment
 
