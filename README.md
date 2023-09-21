@@ -9,17 +9,22 @@
 > - Michał Wachowski
 > - Pablo Flego
 
+![honorable-mention.png](honorable-mention.png)
+
 ## Contents
 
 <!-- TOC -->
 
 - [O'Reilly Architectural Katas 2023](#oreilly-architectural-katas-2023)
 - [Contents](#contents)
+- [Challenge Details](#challenge-details-)
 - [Introduction](#introduction)
 - [Business Case](#business-case)
 - [Architectural Characteristics](#architectural-characteristics)
 - [Architecture Decision Records](#architecture-decision-records)
   <!-- TOC -->
+
+## [Challenge Details](challenge-details.md) 
 
 ## Introduction
 
